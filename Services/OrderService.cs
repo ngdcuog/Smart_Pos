@@ -24,7 +24,12 @@ public sealed class OrderService(IDbContextFactory<AppDbContext> contextFactory)
                 throw new OrderServiceException("Không xác định được nhân viên bán hàng.");
 
             var productIds = normalizedItems.Select(x => x.ProductId).ToList();
-            var products = await context.Products.Where(x => productIds.Contains(x.ProductId)).ToDictionaryAsync(x => x.ProductId);
+            var products = new Dictionary<int, Product>();
+            foreach (var id in productIds)
+            {
+                var product = await context.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+                if (product != null) products[id] = product;
+            }
             if (products.Count != productIds.Count) throw new OrderServiceException("Một hoặc nhiều sản phẩm không còn tồn tại.");
 
             foreach (var item in normalizedItems)
@@ -53,10 +58,15 @@ public sealed class OrderService(IDbContextFactory<AppDbContext> contextFactory)
             await transaction.CommitAsync();
             return new OrderReceipt(order.OrderId, order.TotalAmount, order.DiscountAmount, order.FinalAmount);
         }
-        catch
+        catch (OrderServiceException)
         {
             await transaction.RollbackAsync();
             throw;
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            throw new OrderServiceException($"Không thể hoàn tất thanh toán do lỗi CSDL: {ex.Message}", ex);
         }
     }
 }

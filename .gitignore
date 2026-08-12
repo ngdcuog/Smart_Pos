@@ -9,3 +9,4 @@ tmp/
 
 # Machine-specific configuration and credentials
 appsettings.Local.json
+appsettings.Development.json

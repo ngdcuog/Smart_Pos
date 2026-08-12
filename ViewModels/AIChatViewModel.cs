@@ -41,10 +41,15 @@ public partial class AIChatViewModel(IAIChatService ai)
             Messages.Remove(pending);
             Messages.Add(new ChatMessage("Trợ lý AI", answer, DateTime.Now));
         }
-        catch
+        catch (InvalidOperationException ex)
         {
             if (Messages.LastOrDefault()?.Content == "Đang phân tích dữ liệu...") Messages.RemoveAt(Messages.Count - 1);
-            ErrorMessage = "Không thể kết nối trợ lý AI. Vui lòng thử lại.";
+            ErrorMessage = ex.Message;
+        }
+        catch (Exception ex)
+        {
+            if (Messages.LastOrDefault()?.Content == "Đang phân tích dữ liệu...") Messages.RemoveAt(Messages.Count - 1);
+            ErrorMessage = $"Không thể kết nối trợ lý AI: {ex.Message}";
         }
         finally
         {
