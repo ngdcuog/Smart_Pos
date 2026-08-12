@@ -1,0 +1,5 @@
+using System.Net;using System.Net.Http;using SmartPOS.Services;using SmartPOS.Services.Dtos;
+namespace SmartPOS.Tests;
+public sealed class AIChatServiceTests
+{[Fact]public async Task MissingApiKey_ReturnsSafeConfigurationError(){var old=Environment.GetEnvironmentVariable("SMARTPOS_TEST_MISSING_KEY");Environment.SetEnvironmentVariable("SMARTPOS_TEST_MISSING_KEY",null);try{var service=new AIChatService(new FakeReports(),new HttpClient(),new AISettings{ApiKeyEnvironmentVariable="SMARTPOS_TEST_MISSING_KEY"});var ex=await Assert.ThrowsAsync<InvalidOperationException>(()=>service.AskAsync("Doanh thu hôm nay"));Assert.Contains("chưa được cấu hình",ex.Message);}finally{Environment.SetEnvironmentVariable("SMARTPOS_TEST_MISSING_KEY",old);}}
+private sealed class FakeReports:IReportService{public Task<DashboardDataDto>GetDashboardAsync()=>Task.FromResult(new DashboardDataDto(0,0,0,0,[],[],[],[]));public Task<SalesReportDto>GetSalesReportAsync(DateTime a,DateTime b)=>Task.FromResult(new SalesReportDto(0,0,0,0,[],[],[]));}}

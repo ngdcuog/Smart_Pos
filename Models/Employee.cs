@@ -1,0 +1,3 @@
+using SmartPOS.Models.Enums;
+namespace SmartPOS.Models;
+public class Employee { public int EmployeeId { get; set; } public string EmployeeCode { get; set; } = string.Empty; public string FullName { get; set; } = string.Empty; public string Email { get; set; } = string.Empty; public string? Phone { get; set; } public EmployeeRole Role { get; set; } public string? PasswordHash { get; set; } public bool IsActive { get; set; } = true; public ICollection<FaceSample> FaceSamples { get; set; } = new List<FaceSample>(); public ICollection<Attendance> Attendances { get; set; } = new List<Attendance>(); public ICollection<Order> Orders { get; set; } = new List<Order>(); }

@@ -1,0 +1,59 @@
+<Window x:Class="SmartPOS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="SmartPOS"
+        Width="1366"
+        Height="768"
+        MinWidth="1100"
+        MinHeight="650"
+        Background="{StaticResource Brush.Background.App}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="232" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Background="{StaticResource Brush.Background.Surface}"
+                BorderBrush="{StaticResource Brush.Border.Default}"
+                BorderThickness="0,0,1,0"
+                Padding="{StaticResource Spacing.16}">
+            <DockPanel LastChildFill="True">
+                <StackPanel DockPanel.Dock="Bottom">
+                    <Border BorderBrush="{StaticResource Brush.Border.Default}" BorderThickness="0,1,0,0" Padding="0,16,0,12">
+                        <StackPanel>
+                            <TextBlock Text="{Binding CurrentUserName}" Style="{StaticResource Style.Text.Body}" FontWeight="SemiBold" />
+                            <TextBlock Text="{Binding CurrentUserRole}" Style="{StaticResource Style.Text.Secondary}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Border>
+                    <Button Content="Đăng xuất" Command="{Binding LogoutCommand}" Style="{StaticResource Style.Button.Secondary}" />
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Text="SmartPOS" Style="{StaticResource Style.Text.SectionTitle}" Margin="8,8,8,24" />
+                    <ListBox ItemsSource="{Binding NavigationItems}"
+                             SelectedItem="{Binding SelectedNavigationItem}"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             ItemContainerStyle="{StaticResource Style.Navigation.Item}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Glyph}" FontFamily="Segoe Fluent Icons" FontSize="16" Width="28"
+                                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource Style.Text.Body}"
+                                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" />
+    </Grid>
+</Window>

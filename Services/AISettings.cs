@@ -1,0 +1,1 @@
+namespace SmartPOS.Services; public sealed class AISettings{public string Provider{get;init;}="OpenAI";public string Model{get;init;}="gpt-4o-mini";public string BaseUrl{get;init;}="https://api.openai.com/v1/chat/completions";public string? ApiKey{get;init;}public string ApiKeyEnvironmentVariable{get;init;}="SMARTPOS_AI_API_KEY";public int TimeoutSeconds{get;init;}=30;}

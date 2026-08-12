@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Style.Button.Base" TargetType="Button">
+        <Setter Property="Height" Value="38" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Root" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Root" Property="Opacity" Value="0.55" /></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Style.Button.Primary" TargetType="Button" BasedOn="{StaticResource Style.Button.Base}">
+        <Setter Property="Background" Value="{StaticResource Brush.Action.Primary}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Action.Primary}" />
+        <Setter Property="Foreground" Value="White" />
+        <Style.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource Brush.Action.PrimaryHover}"/></Trigger><Trigger Property="IsPressed" Value="True"><Setter Property="Background" Value="{StaticResource Brush.Action.PrimaryPressed}"/></Trigger></Style.Triggers>
+    </Style>
+    <Style x:Key="Style.Button.Secondary" TargetType="Button" BasedOn="{StaticResource Style.Button.Base}">
+        <Setter Property="Background" Value="{StaticResource Brush.Background.Surface}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Border.Default}" />
+        <Setter Property="Foreground" Value="{StaticResource Brush.Text.Primary}" />
+        <Style.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource Brush.Background.SurfaceSecondary}"/><Setter Property="BorderBrush" Value="{StaticResource Brush.Border.Strong}"/></Trigger><Trigger Property="IsPressed" Value="True"><Setter Property="Background" Value="#E2E8F0"/></Trigger></Style.Triggers>
+    </Style>
+    <Style x:Key="Style.Button.Danger" TargetType="Button" BasedOn="{StaticResource Style.Button.Base}">
+        <Setter Property="Background" Value="{StaticResource Brush.Status.Danger}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Brush.Status.Danger}" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+</ResourceDictionary>

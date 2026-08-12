@@ -1,0 +1,11 @@
+# Build and IDE artifacts
+bin/
+obj/
+.vs/
+
+# Local runtime data
+Invoices/
+tmp/
+
+# Machine-specific configuration and credentials
+appsettings.Local.json
